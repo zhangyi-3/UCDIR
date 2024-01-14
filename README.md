@@ -47,9 +47,21 @@ In this paper, we present a unified conditional framework based on diffusion mod
 
 
 ## Evaluation
+### SID
+1. Download the [denoising model](https://mycuhk-my.sharepoint.com/:f:/g/personal/1155135732_link_cuhk_edu_hk/EuWEqZU5P9VJuguLvEqF_3EBs4lLZpaUW_qbfZiRQvHz3Q?e=2S3cxI) and put it to the folder './experiments/sid/checkpoint'
+2. Download the [testing dataset](https://mycuhk-my.sharepoint.com/:f:/g/personal/1155135732_link_cuhk_edu_hk/EpvezoozpwFIiPCOmZiSltMBSjuTGsQKsKEM3cw9Wf7awg?e=vTVbGr) and put it into the folder './dataset'
 ```
- Coming soon.
-
+# inference
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python -m torch.distributed.launch \
+--nproc_per_node=8 --master_port=4321 \
+python -u sr.py -p val -c config/sid.yaml \
+--checkpoint experiments/sid/checkpoint/I_Elatest
+```
+Download the [SID results](https://mycuhk-my.sharepoint.com/:f:/g/personal/1155135732_link_cuhk_edu_hk/ErVfp6DupExBk2hZn3q2MtMBmfDOBB8a96WQZg-xDqJB9w?e=m7vmVs) of our paper, and put it to the folder './experiments/val_sid-ema-s50/results'
+```
+# calculate PSNR, SSIM, LPIPS, FID, and KID
+python -u eval1.py  \
+-s experiments/val_sid-ema-s50/results
 ```
 
  
